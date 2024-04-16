@@ -70,22 +70,31 @@ public class CharQueue {
         rear = circularArray[0];
         size = 0;
     }
-
+    /**
+     * Adds new elem to the back of the queue
+     * If full, double the capacity
+     */
     public void enqueue(char elem) {
-        if (front == size ){
-            rear++;
+        if (size == capacity){
+            char[] newArray = new char[capacity*2];
+            for (int i = 0; i < size; i++) {
+                //some remainder division shit;
+            }
+
+            // Update the array reference, front, rear, and size
+            circularArray = newArray;
             front = 0;
-            circularArray[front] = elem;
-        }else{
+            rear = size;
+        } else{
+            circularArray[rear] = elem;
             rear++;
-            circularArray[front] = elem;
         }
     }
 
 
     public char peek() {
         // TODO
-        return 0;
+        return circularArray[front];
     }
 
     public char dequeue() {
