@@ -5,7 +5,7 @@
 
 import java.util.NoSuchElementException;
 
-/**
+ /**
  * class CharQueue implements a circular queue that stores characters
  *
  * @author Viki Shi
@@ -18,8 +18,8 @@ public class CharQueue {
     private int size;
     private int front;
     private int rear;
-    private int capacity;
     int DEFAULT_CAPACITY = 5;
+    int DOUBLE_LENGTH = 5;
 
     /**
      * Constructor that sets initial capacity to 5
@@ -29,7 +29,6 @@ public class CharQueue {
         front = 0;
         rear = 0;
         size = 0;
-        capacity = DEFAULT_CAPACITY;
     }
     /**
      * Creates a new queue that sets specified capacity
@@ -44,7 +43,6 @@ public class CharQueue {
             front = 0;
             rear = 0;
             size = 0;
-            capacity = capacity;
         }
 
     }
@@ -53,7 +51,7 @@ public class CharQueue {
      * @return true if array is empty, false otherwise
      */
     public boolean isEmpty() {
-        return circularArray[front] == circularArray[rear];
+        return size == 0;
     }
     /**
      * Returns the number of elements stored in the queue
@@ -66,39 +64,52 @@ public class CharQueue {
      * Clears all elements in the queue
      */
     public void clear() {
-        front = circularArray[0];
-        rear = circularArray[0];
+        front = 0;
+        rear = 0;
         size = 0;
     }
     /**
      * Adds new elem to the back of the queue
      * If full, double the capacity
+     * @param elem the element being added to the queue
      */
     public void enqueue(char elem) {
-        if (size == capacity){
-            char[] newArray = new char[capacity*2];
-            for (int i = 0; i < size; i++) {
-                //some remainder division shit;
-            }
+        if (size == circularArray.length){
+            char[] newArray = new char[circularArray.length*DOUBLE_LENGTH];
 
-            // Update the array reference, front, rear, and size
-            circularArray = newArray;
+            for (int i=0; i<size; i++){
+                newArray[i] = circularArray[(front + i) %
+                        circularArray.length];
+            }
+            circularArray=newArray;
             front = 0;
             rear = size;
-        } else{
-            circularArray[rear] = elem;
-            rear++;
         }
+        circularArray[rear] = elem;
+        rear = (rear + 1) % circularArray.length; // Update the rear index
+        size++;
     }
-
-
+     /**
+      * returns the element at the front of the queue
+      * @throws NoSuchElementException if queue is empty
+      */
     public char peek() {
-        // TODO
+        if (front == rear){
+            throw new NoSuchElementException("Queue is empty");
+        }
         return circularArray[front];
     }
-
+     /**
+      * returns and removes the element at the front of the queue
+      * @throws NoSuchElementException if queue is empty
+      */
     public char dequeue() {
-        // TODO
-        return 0;
+        if (front == rear) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        char returned = circularArray[front];
+        front = (front + 1) % circularArray.length;
+        size --;
+        return returned;
     }
 }
