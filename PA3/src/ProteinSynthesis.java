@@ -14,14 +14,22 @@ import java.util.Arrays;
 class ProteinSynthesis {
     /**
      * Helper method to cast a CharQueue into a string
-     * @param charQueue a CharQueue representing the codon
-     * @return string value of CharQueue
+     * @param codonQueue a CharQueue representing the codon
+     * @return string value of codonQueue
      * **/
-    public String convertQueues(CharQueue charQueue){
-        String result = "";
-        for (int b = 0; b < charQueue.size(); b++){
-            result += charQueue.dequeue();
-        }  return result;
+    public String convertQueues(CharQueue codonQueue){
+        // Create a StringBuilder to construct the string representation of the codon
+        StringBuilder codonStr = new StringBuilder();
+
+        // Iterate through the CharQueue and append each character to the StringBuilder
+        while (!codonQueue.isEmpty()) {
+            char c = codonQueue.dequeue();
+            codonStr.append(c);
+        }
+
+        // Convert the StringBuilder to a string
+        String codonString = codonStr.toString();
+        return codonString;
     }
      /**
       * Helper method to determine if codon is AUG
@@ -72,30 +80,25 @@ class ProteinSynthesis {
      * **/
     public CharQueue translateRNA(CharQueue rna) {
         CharQueue codon = new CharQueue(3);
-        // checks each codon
         CharQueue sequence = new CharQueue(rna.size());
-        // the sequence after AUG is found
         while (rna.size() > 0) {
             for (int q = 0; q < 3; q++) {
                 char elem = rna.dequeue();
-                // current element we are observing
                 codon.enqueue(elem);
             }
-            // add to codon checker
             if (checkQueues(codon) == true) {
                 sequence.enqueue('A');
                 sequence.enqueue('U');
                 sequence.enqueue('G');
-                // if we find start
                 while (rna.size() > 0) {
                     char amino3 = rna.dequeue();
                     sequence.enqueue(amino3);
                 }
                 codon.clear();
                 break;
-            } codon.clear();
+            } codon.clear(); // if codon isnt AUG, clears the codon to check next
+            return sequence;
         }
-            // if codon isnt AUG, clears the codon to check next
 
         // now we have sequence, all the rna BEFORE a stopping codon
         CharQueue translation = new CharQueue(sequence.size());
@@ -140,10 +143,9 @@ class ProteinSynthesis {
                 codon.enqueue(elem3);
                 // adds into codon
             }
-            String codonString = convertQueues(codon);
             char amino;
-            amino = CodonMap.getAminoAcid(codonString);
-            codon.clear();
+            String stringCodon = convertQueues(codon);
+            amino = CodonMap.getAminoAcid(stringCodon);
             protein.enqueue(amino);
         }
         return protein;

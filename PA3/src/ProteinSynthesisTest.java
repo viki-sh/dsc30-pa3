@@ -48,8 +48,8 @@ class ProteinSynthesisTest {
     }
     @Test
     public void transcribe3() {
-        String dna = "ATGCTATGT";
-        String expectedRna = "AUGCUAUGU";
+        String dna = "AUT123";
+        String expectedRna = "AUU123";
         CharQueue actualRna = obj.transcribeDNA(dna);
 
         assertTrue(dna.length() == expectedRna.length());
@@ -91,5 +91,58 @@ class ProteinSynthesisTest {
             // Compare actual and expected characters
             assertEquals(expectedChar, actualChar);
         }
+    }
+    @Test
+    public void translate2() {
+        CharQueue inputRna = new CharQueue(12);
+        inputRna.enqueue('A');
+        inputRna.enqueue('U');
+        inputRna.enqueue('G');
+        inputRna.enqueue('A');
+        inputRna.enqueue('U');
+        inputRna.enqueue('C');
+        inputRna.enqueue('U');
+        inputRna.enqueue('C');
+        inputRna.enqueue('G');
+        inputRna.enqueue('U');
+        inputRna.enqueue('A');
+        inputRna.enqueue('A');
+
+        CharQueue expectedProtein = new CharQueue(4);
+        expectedProtein.enqueue('M');
+        expectedProtein.enqueue('I');
+        expectedProtein.enqueue('S');
+        expectedProtein.enqueue('*');
+
+        CharQueue actualProtein = obj.translateRNA(inputRna);
+        for (int i = 0; i < 3; i++) {
+            char expectedChar = expectedProtein.dequeue(); // Expected character
+            char actualChar = actualProtein.dequeue(); // Actual character
+
+            // Compare actual and expected characters
+            assertEquals(expectedChar, actualChar);
+        }
+    }
+    @Test
+    public void translate3() {
+        CharQueue inputRna = new CharQueue(12);
+        inputRna.enqueue('C');
+        inputRna.enqueue('C');
+        inputRna.enqueue('C');
+        inputRna.enqueue('C');
+        inputRna.enqueue('U');
+        inputRna.enqueue('G');
+        inputRna.enqueue('U');
+        inputRna.enqueue('C');
+        inputRna.enqueue('A');
+        inputRna.enqueue('U');
+        inputRna.enqueue('A');
+        inputRna.enqueue('A');
+
+
+        CharQueue actualProtein = obj.translateRNA(inputRna);
+        assertEquals(actualProtein.size(), 0);
+
+
     }
 }
