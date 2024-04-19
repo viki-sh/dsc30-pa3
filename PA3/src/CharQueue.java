@@ -19,7 +19,7 @@ public class CharQueue {
     private int front;
     private int rear;
     int DEFAULT_CAPACITY = 5;
-    int DOUBLE_LENGTH = 5;
+    int DOUBLE_LENGTH = 2;
 
     /**
      * Constructor that sets initial capacity to 5
