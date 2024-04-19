@@ -112,7 +112,7 @@ class ProteinSynthesis {
                 continue;
             }
             if (sequence.isEmpty()){
-                for (int y = 0; y<3; y++) {
+                for (int y = 0; y<CODON_SIZE; y++) {
                     char keptElem = codon.dequeue();
                     translation.enqueue(keptElem);
                 } codon.clear();
