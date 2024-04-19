@@ -12,6 +12,7 @@ import java.util.Arrays;
  * @since 4/17/2024
  */
 class ProteinSynthesis {
+    int CODON_SIZE = 3;
     /**
      * Helper method to cast a CharQueue into a string
      * @param codonQueue a CharQueue representing the codon
@@ -37,12 +38,12 @@ class ProteinSynthesis {
       * @return boolean if codon is 'A','U','G'
       * **/
     public boolean checkQueues(CharQueue codonCheck){
-        CharQueue check = new CharQueue(3);
+        CharQueue check = new CharQueue(CODON_SIZE);
         check.enqueue('A');
         check.enqueue('U');
         check.enqueue('G');
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < CODON_SIZE; i++) {
             char expectedChar = check.dequeue();
             char actualChar = codonCheck.dequeue();
             if (actualChar != expectedChar) {
@@ -60,7 +61,7 @@ class ProteinSynthesis {
     public CharQueue transcribeDNA(String dna) {
         int lengthDna = dna.length();
         CharQueue rna = new CharQueue(lengthDna);
-        if (dna.length()%3!=0){
+        if (dna.length()%CODON_SIZE!=0){
             throw new IllegalArgumentException("input must be divisible by 3");
         }
         char[] charArray = dna.toCharArray(); // cast string dna to array
@@ -79,10 +80,10 @@ class ProteinSynthesis {
      * @return the protein, a CharQueue object with all RNA codons translated
      * **/
     public CharQueue translateRNA(CharQueue rna) {
-        CharQueue codon = new CharQueue(3);
+        CharQueue codon = new CharQueue(CODON_SIZE);
         CharQueue sequence = new CharQueue(rna.size());
         while (rna.size() > 0) {
-            for (int q = 0; q < 3; q++) {
+            for (int q = 0; q < CODON_SIZE; q++) {
                 char elem = rna.dequeue();
                 codon.enqueue(elem);
             }
@@ -107,7 +108,7 @@ class ProteinSynthesis {
             char elem1 = sequence.dequeue();
             codon.enqueue(elem1);
             // puts into codon to check if ends
-            if (codon.size() != 3){
+            if (codon.size() != CODON_SIZE){
                 continue;
             }
             if (sequence.isEmpty()){
@@ -126,7 +127,7 @@ class ProteinSynthesis {
                 break;
                 // returns final sequence when hits stopping codon
             }
-            for (int y = 0; y<3; y++){
+            for (int y = 0; y<CODON_SIZE; y++){
                 char keptElem = codon.dequeue();
                 translation.enqueue(keptElem);
             }
@@ -138,7 +139,7 @@ class ProteinSynthesis {
         // now we have the final sequence (translation). need to find the amino acid
         CharQueue protein = new CharQueue(translation.size());
         while (translation.size() > 0) {
-            for (int g = 0; g < 3; g++) {
+            for (int g = 0; g < CODON_SIZE; g++) {
                 char elem3 = translation.dequeue();
                 codon.enqueue(elem3);
                 // adds into codon
