@@ -7,7 +7,8 @@ class ProteinSynthesisTest {
     public void transcribe1() {
         ProteinSynthesis obj = new ProteinSynthesis();
         String dna = "ATGATCTCGTAA";
-        CharQueue expectedRna = new CharQueue(dna.length());
+        int lengthDna = dna.length();
+        CharQueue expectedRna = new CharQueue(lengthDna);
         expectedRna.enqueue('A');
         expectedRna.enqueue('U');
         expectedRna.enqueue('G');
@@ -23,8 +24,10 @@ class ProteinSynthesisTest {
 
         CharQueue actualRna = obj.transcribeDNA(dna);
 
-        while (!expectedRna.isEmpty() && !actualRna.isEmpty()) {
-            assertEquals(expectedRna.dequeue(), actualRna.dequeue(), "Each character in RNA sequences should match.");
+        for (int i = 0; i < lengthDna; i++) {
+            char expectedChar = expectedRna.dequeue();
+            char actualChar = actualRna.dequeue();
+            assertEquals(expectedChar, actualChar);
         }
     }
 }

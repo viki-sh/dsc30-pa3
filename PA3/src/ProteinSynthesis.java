@@ -16,9 +16,10 @@ class ProteinSynthesis {
      * @throws IllegalArgumentException if input isnt divisible by 3
      */
     public CharQueue transcribeDNA(String dna) {
-        CharQueue rna = new CharQueue(dna.length());
+        int lengthDna = dna.length();
+        CharQueue rna = new CharQueue(lengthDna);
         if (dna.length()%3!=0){
-            throw new IllegalArgumentException("input cant be divisible by 3");
+            throw new IllegalArgumentException("input must be divisible by 3");
         }
         char[] charArray = dna.toCharArray(); // cast string dna to array
         for (int i=0; i<dna.length(); i++){

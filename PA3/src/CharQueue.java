@@ -84,6 +84,7 @@ public class CharQueue {
             circularArray=newArray;
             front = 0;
             rear = size;
+            size++;
         }
         circularArray[rear] = elem;
         rear = (rear + 1) % circularArray.length; // Update the rear index
@@ -94,7 +95,7 @@ public class CharQueue {
       * @throws NoSuchElementException if queue is empty
       */
     public char peek() {
-        if (front == rear){
+        if (size == 0){
             throw new NoSuchElementException("Queue is empty");
         }
         return circularArray[front];
@@ -104,7 +105,7 @@ public class CharQueue {
       * @throws NoSuchElementException if queue is empty
       */
     public char dequeue() {
-        if (front == rear) {
+        if (size == 0) {
             throw new NoSuchElementException("Queue is empty");
         }
         char returned = circularArray[front];
