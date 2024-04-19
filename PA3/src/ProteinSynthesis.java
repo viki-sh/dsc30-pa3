@@ -12,7 +12,7 @@ import java.util.Arrays;
  * @since 4/17/2024
  */
 class ProteinSynthesis {
-    int CODON_SIZE = 3;
+    private static final int CODON_SIZE = 3;
     /**
      * Helper method to cast a CharQueue into a string
      * @param codonQueue a CharQueue representing the codon

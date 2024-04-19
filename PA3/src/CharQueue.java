@@ -18,8 +18,8 @@ public class CharQueue {
     private int size;
     private int front;
     private int rear;
-    int DEFAULT_CAPACITY = 5;
-    int DOUBLE_LENGTH = 2;
+    private static final int DEFAULT_CAPACITY = 5;
+    private static final int DOUBLE_LENGTH = 2;
 
     /**
      * Constructor that sets initial capacity to 5
@@ -92,6 +92,7 @@ public class CharQueue {
     }
      /**
       * returns the element at the front of the queue
+      * @return the char at the front of queue
       * @throws NoSuchElementException if queue is empty
       */
     public char peek() {
@@ -102,6 +103,7 @@ public class CharQueue {
     }
      /**
       * returns and removes the element at the front of the queue
+      * @return the char at the front of queue
       * @throws NoSuchElementException if queue is empty
       */
     public char dequeue() {
