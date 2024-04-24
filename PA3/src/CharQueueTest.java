@@ -125,18 +125,20 @@ class CharQueueTest {
     @Test
     public void enqueue2() {
         CharQueue obj1 = new CharQueue(2);
-        obj.enqueue('e');
-        obj.enqueue('r');
-        obj.enqueue('t');
-        assertEquals(obj.size(), 3);
+        obj1.enqueue('e');
+        obj1.enqueue('r');
+        obj1.enqueue('r');
+        assertEquals(obj1.size(), 3);
     }
     @Test
     public void enqueue3() {
         CharQueue obj1 = new CharQueue(2);
-        obj.enqueue('e');
-        obj.enqueue('r');
-        obj.enqueue('t');
-        assertEquals(obj.isEmpty(), false);
+        obj1.enqueue('e');
+        obj1.enqueue('r');
+        obj1.enqueue('t');
+        assertEquals(obj1.size(), 3);
+        assertEquals(obj1.dequeue(), 'e');
+
     }
     @Test
     public void peek1() {

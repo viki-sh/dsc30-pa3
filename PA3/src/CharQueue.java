@@ -84,7 +84,6 @@ public class CharQueue {
             circularArray=newArray;
             front = 0;
             rear = size;
-            size++;
         }
         circularArray[rear] = elem;
         rear = (rear + 1) % circularArray.length; // Update the rear index
