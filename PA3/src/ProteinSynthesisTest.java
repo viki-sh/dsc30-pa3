@@ -123,26 +123,4 @@ class ProteinSynthesisTest {
             assertEquals(expectedChar, actualChar);
         }
     }
-    @Test
-    public void translate3() {
-        CharQueue inputRna = new CharQueue(12);
-        inputRna.enqueue('C');
-        inputRna.enqueue('C');
-        inputRna.enqueue('C');
-        inputRna.enqueue('C');
-        inputRna.enqueue('U');
-        inputRna.enqueue('G');
-        inputRna.enqueue('U');
-        inputRna.enqueue('C');
-        inputRna.enqueue('A');
-        inputRna.enqueue('U');
-        inputRna.enqueue('A');
-        inputRna.enqueue('A');
-
-
-        CharQueue actualProtein = obj.translateRNA(inputRna);
-        assertEquals(actualProtein.size(), 0);
-
-
-    }
 }

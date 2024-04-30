@@ -28,9 +28,7 @@ class ProteinSynthesis {
             codonStr.append(c);
         }
 
-        // Convert the StringBuilder to a string
-        String codonString = codonStr.toString();
-        return codonString;
+        return codonStr.toString();
     }
      /**
       * Helper method to determine if codon is AUG
@@ -49,7 +47,8 @@ class ProteinSynthesis {
             if (actualChar != expectedChar) {
                 return false;
             }
-        } return true;
+        }
+        return true;
     }
 
     /**
@@ -59,21 +58,22 @@ class ProteinSynthesis {
      * @throws IllegalArgumentException if input isnt divisible by 3
      */
     public CharQueue transcribeDNA(String dna) {
-        int lengthDna = dna.length();
-        CharQueue rna = new CharQueue(lengthDna);
+        CharQueue rna = new CharQueue(dna.length());
         if (dna.length()%CODON_SIZE!=0){
             throw new IllegalArgumentException("input must be divisible by 3");
         }
-        char[] charArray = dna.toCharArray(); // cast string dna to array
-        for (int i=0; i<dna.length(); i++){
-            if (charArray[i] == 'T'){
+        char[] charArray = dna.toCharArray();
+        for (char c : charArray) {
+            if (c == 'T') {
                 rna.enqueue('U');
-            }else{
-                rna.enqueue(charArray[i]);
+            } else {
+                rna.enqueue(c);
             }
         }
+
         return rna;
     }
+
     /**
      * Returns the protein based on amino acids in RNA
      * @param rna a CharQueue object representing the RNA
@@ -87,7 +87,7 @@ class ProteinSynthesis {
                 char elem = rna.dequeue();
                 codon.enqueue(elem);
             }
-            if (checkQueues(codon) == true) {
+            if (checkQueues(codon)) {
                 sequence.enqueue('A');
                 sequence.enqueue('U');
                 sequence.enqueue('G');
@@ -97,51 +97,37 @@ class ProteinSynthesis {
                 }
                 codon.clear();
                 break;
-            } codon.clear(); // if codon isnt AUG, clears the codon to check next
-            return sequence;
+            }
+            codon.clear(); // if codon isnt AUG, clears the codon to check next
         }
 
-        // now we have sequence, all the rna BEFORE a stopping codon
         CharQueue translation = new CharQueue(sequence.size());
-        while (sequence.size() > 0) {
-            // for each nucleotide in sequence
-            char elem1 = sequence.dequeue();
-            codon.enqueue(elem1);
-            // puts into codon to check if ends
-            if (codon.size() != CODON_SIZE){
-                continue;
+        while (!sequence.isEmpty()) {
+            for (int i = 0; i < CODON_SIZE; i++) {
+                char elem = sequence.dequeue();
+                codon.enqueue(elem);
             }
-            if (sequence.isEmpty()){
-                for (int y = 0; y<CODON_SIZE; y++) {
-                    char keptElem = codon.dequeue();
-                    translation.enqueue(keptElem);
-                } codon.clear();
-                break;
-            }
-            if (codon.equals("UAA") || codon.equals("UAG") || codon.equals("UGA")){
-                while (sequence.size() <0){
+            if (codon.equals("UAA") || codon.equals("UAG") || codon.equals("UGA")) {
+                while (!sequence.isEmpty()) {
                     char finalElem = sequence.dequeue();
                     translation.enqueue(finalElem);
-
-                } codon.clear();
+                }
                 break;
-                // returns final sequence when hits stopping codon
             }
-            for (int y = 0; y<CODON_SIZE; y++){
+            for (int y = 0; y < CODON_SIZE; y++) {
                 char keptElem = codon.dequeue();
                 translation.enqueue(keptElem);
             }
             codon.clear();
-            // else, dequeues from codon and puts into final sequence
         }
 
 
         // now we have the final sequence (translation). need to find the amino acid
         CharQueue protein = new CharQueue(translation.size());
-        while (translation.size() > 0) {
+        while (!translation.isEmpty()) {
             for (int g = 0; g < CODON_SIZE; g++) {
-                char elem3 = translation.dequeue();
-                codon.enqueue(elem3);
+                char elem = translation.dequeue();
+                codon.enqueue(elem);
                 // adds into codon
             }
             char amino;
@@ -151,5 +137,4 @@ class ProteinSynthesis {
         }
         return protein;
     }
-
 }
